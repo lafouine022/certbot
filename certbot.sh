@@ -30,6 +30,9 @@ certbot certonly --nginx -d "$DOMAIN" --non-interactive --agree-tos --email "$EM
 # Chemin du fichier de configuration Nginx
 NGINX_CONF="/etc/nginx/sites-enabled/rutorrent.conf"
 
+# Remplacer "MONDOMAINE" par la valeur de $DOMAIN dans le fichier de configuration Nginx
+sed -i "s/MONDOMAINE/$DOMAIN/g" "$NGINX_CONF"
+
 # Remplacer les anciennes lignes de certificat par les nouvelles
 sed -i "s|ssl_certificate /etc/nginx/ssl/server.crt;|ssl_certificate /etc/letsencrypt/live/$DOMAIN/fullchain.pem;|g" "$NGINX_CONF"
 sed -i "s|ssl_certificate_key /etc/nginx/ssl/server.key;|ssl_certificate_key /etc/letsencrypt/live/$DOMAIN/privkey.pem;|g" "$NGINX_CONF"
